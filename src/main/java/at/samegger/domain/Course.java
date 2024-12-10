@@ -51,7 +51,7 @@ public class Course extends BaseEntity {
         if(description!= null && description.length()>10) {
             this.description = description;
         } else {
-            throw new InvalidValueException("Beschreibung muss mindestens 10 Zeichen lang sein")
+            throw new InvalidValueException("Beschreibung muss mindestens 10 Zeichen lang sein");
         }
     }
 
@@ -63,7 +63,7 @@ public class Course extends BaseEntity {
         if(courseType != null) {
             this.courseType = courseType;
         } else {
-            throw new InvalidValueException("Kurstyp darf nicht null sein")
+            throw new InvalidValueException("Kurstyp darf nicht null sein");
         }
     }
 
