@@ -127,7 +127,7 @@ public class MySqlCourseRepository implements MyCourseRepository{
             return Optional.empty();
         } else {
             try {
-                String sql = "SELECT  FROM courses WHERE id = ?";
+                String sql = "SELECT * FROM courses WHERE id = ?";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
                 preparedStatement.setLong(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
