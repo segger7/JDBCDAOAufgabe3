@@ -9,6 +9,7 @@ import at.samegger.domain.InvalidValueException;
 
 import javax.xml.crypto.Data;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -41,6 +42,15 @@ public class Cli {
                 case "4":
                     updateCourseDetails();
                     break;
+                case "5":
+                    deleteCourse();
+                    break;
+                case "6":
+                    courseSearch();
+                    break;
+                case "7":
+                    runningCourses();
+                    break;
                 case "x":
                     System.out.println("Auf Wiedersehen!");
                     break;
@@ -50,6 +60,52 @@ public class Cli {
             }
         }
         scan.close();
+    }
+
+    private void runningCourses() {
+        System.out.println("Aktuell laufende Kurse: ");
+        List<Course> list;
+        try {
+            list = repo.findAllRunningCourses();
+            for(Course course : list) {
+                System.out.println(course);
+            }
+
+        } catch(DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei Kurs-Anzeige für laufende Kurse: " + databaseException.getMessage());
+        } catch(Exception exception) {
+            System.out.println("Unbekannter Fehler bei Kurs-Anzeige für laufende Kurse: " + exception);
+        }
+    }
+
+    private void courseSearch() {
+        System.out.println("Geben Sie einen Suchbegriff an:");
+        String searchString  = scan.nextLine();
+        List<Course> courseList;
+        try {
+            courseList = repo.findAllCoursesByNameOrDescription(searchString);
+            for(Course course : courseList) {
+                System.out.println(course);
+            }
+
+        } catch(DatabaseException databaseException) {
+            System.out.println("Datenbankfehler bei der Kurssuche: " + databaseException.getMessage());
+        } catch(Exception exception) {
+            System.out.println("Unbekannter Fehler bei der Kurssuche: " + exception.getMessage());
+        }
+    }
+
+    private void deleteCourse() {
+        System.out.println("Welchen Kurs möchten Sie löschen? Bitte ID eingeben: ");
+        Long courseIdToDelete = Long.parseLong(scan.nextLine());
+
+        try{
+            repo.deleteByid(courseIdToDelete);
+        } catch (DatabaseException databaseException) {
+            System.out.println("Datenbankfehler beim Löschen: " + databaseException.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unbekannter Fehler beim Löschen: " + e.getMessage());
+        }
     }
 
     private void updateCourseDetails() {
@@ -100,8 +156,14 @@ public class Cli {
                 );
             }
 
+        } catch(IllegalArgumentException illegalArgumentException) {
+            System.out.println("Eingabefehler: " + illegalArgumentException.getMessage());
+        } catch(InvalidValueException invalidValueException) {
+            System.out.println("Kursdaten nicht korrekt angegeben: " + invalidValueException.getMessage());
+        } catch(DatabaseException databaseException) {
+            System.out.println("Datenbankfehler beim Einfügen: " + databaseException.getMessage());
         } catch(Exception exception) {
-            System.out.println("Unbekannter Fehler bei Kursupdate: " + exception.getMessage());
+            System.out.println("Unbekannter Fehler beim Einfügen:" + exception.getMessage());
         }
     }
 
@@ -185,7 +247,7 @@ public class Cli {
 
     private void showMenu() {
         System.out.println("-------------KURSMANAGEMENT-------------");
-        System.out.println("(1) Kurse eingeben \t (2) Alle Kurse anzeigen \t (3) Kurs-Details anzeigen \t (4) Kurs-Details ändern");
+        System.out.println("(1) Kurse eingeben \t (2) Alle Kurse anzeigen \t (3) Kurs-Details anzeigen \t (4) Kurs-Details ändern \t (5) Kurs löschen \t (6) Kurs-Suche \t (7) Laufende Kurse");
         System.out.println("(x) ENDE");
     }
 
