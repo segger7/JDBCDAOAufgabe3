@@ -1,5 +1,6 @@
 package at.samegger;
 
+import at.samegger.dataaccess.MySqlCourseRepository;
 import at.samegger.ui.Cli;
 
 import java.sql.Connection;
@@ -8,15 +9,13 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
 
-        Cli mycli = new Cli();
-        mycli.start();
         try {
-            Connection myConnection = MysqlDatabaseConnection.getConnection("jdbc:mysql://localhost:3306/imstkurssystem","root","");
-            System.out.println("Verbindung aufgebaut!");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            Cli mycli = new Cli(new MySqlCourseRepository());
+            mycli.start();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Datenbankfehler " + e.getMessage() + " SQL-State: " + e.getSQLState());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Datenbankfehler " + e.getMessage());
         }
     }
 
