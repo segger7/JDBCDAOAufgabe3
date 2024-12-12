@@ -8,6 +8,13 @@ public class Student extends BaseEntity{
     private String lastname;
     private Date dateOfBirth;
 
+    public Student(String firstname, String lastname, Date dateOfBirth) {
+        super(null);
+        setFirstname(firstname);
+        setLastname(lastname);
+        setDateOfBirth(dateOfBirth);
+    }
+
     public Student(Long id, String firstname, String lastname, Date dateOfBirth) {
         super(id);
         setFirstname(firstname);
@@ -49,5 +56,14 @@ public class Student extends BaseEntity{
         } else {
             throw new InvalidValueException("Vorname darf nicht null sein");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
     }
 }

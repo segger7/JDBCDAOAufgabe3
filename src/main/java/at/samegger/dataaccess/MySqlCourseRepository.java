@@ -68,7 +68,7 @@ public class MySqlCourseRepository implements MyCourseRepository{
 
     @Override
     public List<Course> findAllRunningCourses() {
-        String sql = "SELECT * FROM course WHERE NOW()<enddate";
+        String sql = "SELECT * FROM courses WHERE NOW()<enddate";
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
