@@ -90,3 +90,29 @@ Die findAllRunningCourses Methode sucht alle Kurse die noch nicht das Enddatum e
 
 Die DAO Implementierung für die Klasse Student analog zur Klasse Course
 
+### Aufgabe 4 Teil 2:
+
+Den CLI Teil für die Student Klasse analog zur Kurs Klasse implementiert.
+
+## Aufgabe 5:
+
+Erweiterung der Applikation:
+
+Buchungen
+
+Eine Klasse Buchung:
+Die Klasse „Buchung“ kann eine Verbindung zwischen Studenten und Kursen sein. Die Klasse soll daher folgende Eigenschaften haben:
+
+Eine Buchungs-ID (Primärschlüssel mit Auto Increment): Jede Entität muss eine ID haben
+
+Studenten-ID (Fremdschlüssel von Student): Der Studenten, der die Buchung gemacht hat.
+
+Kurs-ID (Fremdschlüssel von Kurs): Der Kurs, der gebucht wurde.
+
+Buchungsdatum: Datum und Zeit der Buchung.
+
+Status: Status der Buchung, zB. „Aktiv“, „Storniert“. Könnte man mit einem Enum lösen
+
+### UML-Diagramm zum Aufbau mit Buchung in der Datenbank
+
+![UML-Diagramm](umldiagramm.png)

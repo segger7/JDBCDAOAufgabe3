@@ -21,10 +21,9 @@ public class MySqlStudentRepository implements MyStudentRepository{
 
     @Override
     public List<Student> findAllStudentsByNameLike(String searchText) {
-        String sql = "SELECT * FROM students WHERE firstname LIKE %?% OR lastname LIKE %?%";
+        String sql = "SELECT * FROM students WHERE firstname LIKE '%" + searchText + "%' OR lastname LIKE '%" + searchText + "%'";
         try {
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, searchText);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Student> studentList = new ArrayList<>();
             while(resultSet.next()) {
